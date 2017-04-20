@@ -4,7 +4,7 @@ require "json"
 module LegacyOfMan
   class Server
     def initialize(logger : Logger)
-      logger.info("initialize server") if logger.is_a? Logger
+      logger.info("initialize server Legacy Of Man version #{VERSION}") if logger.is_a? Logger
       raise "Config file not found" unless File.exists?(CONFIG_PATH)
       json_file = File.read(CONFIG_PATH)
       raise "Cannot read config file" unless json_file.is_a? String
@@ -30,12 +30,12 @@ module LegacyOfMan
           spawn do
             if client.is_a? TCPSocket
               @logger.info("New client connected from: #{client.remote_address.address}:#{client.remote_address.port}")
-              client << "Welcome to Legacy Of Man\n"
-              client.close
+              ch = ClientHandler.new(client, @logger)
+              ch.handle
             end
           end
         rescue e : Exception
-          @logger.error("Error accepting new client: #{e}")
+          @logger.error("Error handeling client: #{e}")
         end
       end
     end
