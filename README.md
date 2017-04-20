@@ -25,4 +25,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [[bararchy](https://github.com/[your-github-name]) - creator, maintainer
+- [bararchy](https://github.com/[your-github-name]) - creator, maintainer
