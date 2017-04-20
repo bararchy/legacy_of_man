@@ -1,3 +1,5 @@
+require "json"
+
 module LegacyOfMan
   class Config
     JSON.mapping(

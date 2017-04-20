@@ -1,9 +1,10 @@
 require "./legacy_of_man/*"
 require "logger"
-CONFIG_PATH = "../../config.json"
+CONFIG_PATH = "config.json"
 
-logger = Logger.new("../logs/legacy_of_man.log")
+log_file = File.open("logs/legacy_of_man.log", "a")
+raise "Cannot open log file" unless log_file && log_file.is_a? IO
+logger = Logger.new(log_file)
 
-module LegacyOfMan
-  # TODO Put your code here
-end
+server = LegacyOfMan::Server.new(logger)
+server.serve
