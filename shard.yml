@@ -1,0 +1,13 @@
+name: legacy_of_man
+version: 0.1.0
+
+authors:
+  - bararchy <bar.hofesh@safe-t.com>
+
+targets:
+  legacy_of_man:
+    main: src/legacy_of_man.cr
+
+crystal: 0.21.1+6
+
+license: MIT
