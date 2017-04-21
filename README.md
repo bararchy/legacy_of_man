@@ -5,11 +5,19 @@ The game is written in the Crystal programming languge.
 
 ## Installation
 
-TODO
+```bash
+git clone https://github.com/bararchy/legacy_of_man.git
+cd legacy_of_man
+crystal deps
+crystal build --release src/legacy_of_man.cr
+./legacy_of_man
+```
 
 ## Usage
 
-TODO
+Right now you will need to setup a Mysql\MariaDB database and add the relevant information to the `conf.json` file.  
+Remmber that to connect you will need a telnet\nc (tcp client) and just connect to the port.  
+The server will create all relevant tables and data if it's not there.  
 
 ## Development
 
