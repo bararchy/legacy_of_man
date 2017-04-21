@@ -1,4 +1,7 @@
 {
   "port": 3000,
-  "bind": "0.0.0.0"
+  "bind": "0.0.0.0",
+  "db_user": "legacyofman",
+  "db_ip": "localhost",
+  "db_name": "legacyofman"
 }

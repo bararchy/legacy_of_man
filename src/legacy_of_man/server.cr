@@ -1,5 +1,6 @@
 require "socket"
 require "json"
+require "mysql"
 
 module LegacyOfMan
   class Server
@@ -11,6 +12,7 @@ module LegacyOfMan
       @config = Config.from_json(json_file)
       logger.info("Server Started using configs: #{@config.to_json}")
       @logger = logger
+      init_db
     end
 
     def create_listiner : TCPServer
@@ -22,6 +24,22 @@ module LegacyOfMan
       end
     end
 
+    def init_db
+      begin
+        DB.open "mysql://#{@config.db_user}@#{@config.db_ip}/#{@config.db_name}" do |db|
+          @logger.info("Initialzing database")
+          db.exec "CREATE TABLE IF NOT EXISTS users (
+          username varchar(50) DEFAULT NULL,
+          password varchar(100) DEFAULT NULL,
+          email varchar(50) DEFAULT NULL
+          );"
+          @logger.info("database initialization completed")
+        end
+      rescue e : Exception
+        raise "Cannot initialize Database: #{e}"
+      end
+    end
+
     def serve
       server = create_listiner
       loop do
@@ -30,7 +48,7 @@ module LegacyOfMan
           spawn do
             if client.is_a? TCPSocket
               @logger.info("New client connected from: #{client.remote_address.address}:#{client.remote_address.port}")
-              ch = ClientHandler.new(client, @logger)
+              ch = ClientHandler.new(client, @logger, @config)
               ch.handle
             end
           end
