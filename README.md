@@ -19,6 +19,11 @@ Right now you will need to setup a Mysql\MariaDB database and add the relevant i
 Remmber that to connect you will need a telnet\nc (tcp client) and just connect to the port.  
 The server will create all relevant tables and data if it's not there.  
 
+So basiclly after running the server, just 
+```
+telnet 127.0.0.1 3000 # or whatever your configured port is
+```
+
 ## Development
 
 TODO: Write development instructions here
