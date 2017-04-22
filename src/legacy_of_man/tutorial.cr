@@ -2,7 +2,7 @@ module LegacyOfMan
   class Tutorial
     def initialize(user : User, logger : Logger)
       @logger = logger
-      @room = Map::Room.new(5, 10, [0, 0], [5, 5])
+      @room = Map::Room.new(5, 10, [0, 0], [4, 5])
       @user = user
     end
 
@@ -16,9 +16,8 @@ module LegacyOfMan
       @logger.info("Room Map: #{@room.gen_map}")
       @user << "Here is a map of the room you are in: \r\n"
       @user << @room.gen_map
-      @user << "\r\nAnd your place in it is: #{@room.placement}\r\n"
-      @user << "The place or placement is an X/Y axis, so [0,0] means you are on the x=0 and y=0 'block' in the room\r\n"
-      @user << "Or more intuativly, you are on the most southeast part of the room\r\n"
+      @user << "\r\nYour place in it is marked as [X] and the room Exit is marked with [E]"
+      @user << "When you move to the Exit ([E]) block you will exit the room"
       @user << "to move around you just need to type 'n' for north, 's' for south, 'e' for east and 'w' for west"
       eh = Map::EnvironmentHandler.new(@user, @room)
       eh.handle

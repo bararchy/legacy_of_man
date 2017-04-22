@@ -14,7 +14,7 @@ module LegacyOfMan
             @user << "\r\nyou exit the room"
             break
           elsif status == :ok
-            @user << "\r\nNew position: #{@room.placement}\r\n"
+            @user << @room.gen_map
           elsif status == :wrong_direction
             @user << "\r\nOnly 'n', 's', 'e', 'w'\r\n"
           elsif status == :max_direction
