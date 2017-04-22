@@ -1,6 +1,7 @@
 require "socket"
 require "json"
 require "mysql"
+require "secure_random"
 
 module LegacyOfMan
   class Server
@@ -24,6 +25,14 @@ module LegacyOfMan
       end
     end
 
+    def init_salt
+      unless File.exists(".salt.secret")
+        logger.info("Creating secret salt for password hashing")
+        salt = SecureRandom.hex(50)
+        File.write(".salt.secret", salt)
+      end
+    end
+
     def init_db
       begin
         DB.open "mysql://#{@config.db_user}@#{@config.db_ip}/#{@config.db_name}" do |db|
@@ -31,7 +40,8 @@ module LegacyOfMan
           db.exec "CREATE TABLE IF NOT EXISTS users (
           username varchar(50) DEFAULT NULL,
           password varchar(100) DEFAULT NULL,
-          email varchar(50) DEFAULT NULL
+          email varchar(50) DEFAULT NULL,
+          data varchar(5000) DEFAULT NULL
           );"
           @logger.info("database initialization completed")
         end

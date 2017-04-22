@@ -6,6 +6,7 @@ module LegacyOfMan
       @socket = socket
       @logger = logger
       @config = config
+      @salt = File.read(".salt.secret")
     end
 
     def handle
