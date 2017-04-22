@@ -49,5 +49,9 @@ module LegacyOfMan
         raise "Cannot load user data for: #{@username}"
       end
     end
+
+    def get_command : String
+      read(@socket, 4096)
+    end
   end
 end
