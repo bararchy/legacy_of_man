@@ -3,3 +3,4 @@
 /bin/
 /.shards/
 .salt.secret
+/logs/legacy_of_man.log

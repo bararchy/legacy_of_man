@@ -57,7 +57,7 @@ module LegacyOfMan
     def verify_user(username : String) : Bool
       @socket << "\r\nPlease enter your password: "
       password = read(@socket, 1024)
-      hashed = Crypto::Bcrypt.new(password, "730baf5942cb97b527597f3e84ab8990", cost = 11)
+      hashed = Crypto::Bcrypt.new(password, @salt, cost = 11)
       rows = true
       DB.open "mysql://#{@config.db_user}@#{@config.db_ip}/#{@config.db_name}" do |db|
         rows = db.scalar "select username from users where username = '#{username}' and password = '#{hashed}';" rescue false
@@ -84,7 +84,7 @@ module LegacyOfMan
       end
       @logger.info("Creating new user in DB")
       DB.open "mysql://#{@config.db_user}@#{@config.db_ip}/#{@config.db_name}" do |db|
-        db.exec "INSERT INTO users (username, password, email) VALUES ('#{username}', '#{Crypto::Bcrypt.new(user_password, "730baf5942cb97b527597f3e84ab8990", cost = 11)}', '#{email}');"
+        db.exec "INSERT INTO users (username, password, email) VALUES ('#{username}', '#{Crypto::Bcrypt.new(user_password, @salt, cost = 11)}', '#{email}');"
       end
       @logger.info("New user #{username} has been created")
       @socket << "User created, plesae relogin with your new user and password"
