@@ -26,7 +26,14 @@ telnet 127.0.0.1 3000 # or whatever your configured port is
 
 ## Development
 
-TODO: Write development instructions here
+- [ ] Item class, handle all items as objects  
+- [ ] Save user data as a blob and not json, so we can marshal the data  
+- [ ] World class, handle world global events  (day,night | server announcments | chat | etc..)  
+- [ ] Map class, Should handle moving around, keep track of users place in the world  
+- [ ] Add to User class: Movment, save (update DB), attack, other basic commands, health (and mana?) increase decrease  
+- [ ] Combat class, handles ... combat :) will take an array of users\mobs and will allow them to attack and fight  
+
+I'll add more needs as the game will come along.  
 
 ## Contributing
 
