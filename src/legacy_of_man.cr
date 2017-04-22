@@ -1,4 +1,4 @@
-require "./legacy_of_man/*"
+require "./legacy_of_man/**"
 require "logger"
 CONFIG_PATH = "config.json"
 

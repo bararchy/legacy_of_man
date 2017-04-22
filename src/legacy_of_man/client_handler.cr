@@ -32,6 +32,14 @@ module LegacyOfMan
       end
       user = User.new(@socket, @logger, username, @config)
       @socket << user.char_sheet
+      if user.data.firstime
+        @logger.info("#{user.name} is a first-timer, sending to tutorial")
+        t = Tutorial.new(user, @logger)
+        t.start
+      else
+        @logger.info("#{user.name} is an old player, sending to game")
+        # Send to game
+      end
       @logger.info("The user #{user.name} has identifed")
     end
 
