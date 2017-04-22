@@ -30,7 +30,8 @@ module LegacyOfMan
         @socket << "\r\nWrong password for username #{username} !"
         raise "Incorrect login from #{username}"
       end
-      user = User.new(@socket, @logger, username)
+      user = User.new(@socket, @logger, username, @config)
+      @socket << user.char_sheet
       @logger.info("The user #{user.name} has identifed")
     end
 
@@ -84,10 +85,27 @@ module LegacyOfMan
       end
       @logger.info("Creating new user in DB")
       DB.open "mysql://#{@config.db_user}@#{@config.db_ip}/#{@config.db_name}" do |db|
-        db.exec "INSERT INTO users (username, password, email) VALUES ('#{username}', '#{Crypto::Bcrypt.new(user_password, @salt, cost = 11)}', '#{email}');"
+        db.exec "INSERT INTO users (username, password, email, data) VALUES ('#{username}', '#{Crypto::Bcrypt.new(user_password, @salt, cost = 11)}', '#{email}', '#{genereate_new_char_data}');"
       end
       @logger.info("New user #{username} has been created")
       @socket << "User created, plesae relogin with your new user and password"
+    end
+
+    def genereate_new_char_data : String
+      <<-EOF
+      {
+        "firstime": true,
+        "level": 1,
+        "items": {},
+        "skills": {"basic_attack": 1},
+        "equipment": {"worn clothes": "body"},
+        "stats": {
+          "intelegence": 5,
+          "strength": 5,
+          "agility": 5
+        }
+      }
+      EOF
     end
   end
 end

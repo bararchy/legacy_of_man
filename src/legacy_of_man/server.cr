@@ -13,6 +13,7 @@ module LegacyOfMan
       @config = Config.from_json(json_file)
       logger.info("Server Started using configs: #{@config.to_json}")
       @logger = logger
+      init_salt
       init_db
     end
 
@@ -26,8 +27,8 @@ module LegacyOfMan
     end
 
     def init_salt
-      unless File.exists(".salt.secret")
-        logger.info("Creating secret salt for password hashing")
+      unless File.exists?(".salt.secret")
+        @logger.info("Creating secret salt for password hashing")
         salt = SecureRandom.hex(50)
         File.write(".salt.secret", salt)
       end
