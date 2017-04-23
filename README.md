@@ -1,7 +1,7 @@
 # legacy_of_man
 
 This repo holds the server side of Legacy Of Man game.  
-The game is written in the Crystal programming languge.  
+The game is written in the Crystal programming language.  
 
 ## Installation
 
@@ -16,10 +16,10 @@ crystal build --release src/legacy_of_man.cr
 ## Usage
 
 Right now you will need to setup a Mysql\MariaDB database and add the relevant information to the `conf.json` file.  
-Remmber that to connect you will need a telnet\nc (tcp client) and just connect to the port.  
+Remember that to connect you will need a telnet\nc (tcp client) and just connect to the port.  
 The server will create all relevant tables and data if it's not there.  
 
-So basiclly after running the server, just 
+So basically after running the server, just 
 ```
 telnet 127.0.0.1 3000 # or whatever your configured port is
 ```
@@ -28,9 +28,9 @@ telnet 127.0.0.1 3000 # or whatever your configured port is
 
 - [ ] Item class, handle all items as objects  
 - [ ] Save user data as a blob and not json, so we can marshal the data  
-- [ ] World class, handle world global events  (day,night | server announcments | chat | etc..)  
+- [ ] World class, handle world global events  (day,night | server announcements | chat | etc..)  
 - [ ] Map class, Should handle moving around, keep track of users place in the world  
-- [ ] Add to User class: Movment, save (update DB), attack, other basic commands, health (and mana?) increase decrease  
+- [ ] Add to User class: Movement, save (update DB), attack, other basic commands, health (and mana?) increase decrease  
 - [ ] Combat class, handles ... combat :) will take an array of users\mobs and will allow them to attack and fight  
 
 I'll add more needs as the game will come along.  

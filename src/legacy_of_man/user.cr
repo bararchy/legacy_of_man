@@ -51,7 +51,7 @@ module LegacyOfMan
     end
 
     def get_command : String
-      read(@socket, 4096)
+      read_s(@socket)
     end
   end
 end

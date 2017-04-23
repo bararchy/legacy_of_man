@@ -21,7 +21,7 @@ module LegacyOfMan
 
     def welcome
       @socket << welcome_message
-      username = read(@socket, 1024)
+      username = read_s(@socket)
       unless user_exists?(username)
         create_user(username)
         return
@@ -40,7 +40,7 @@ module LegacyOfMan
         @logger.info("#{user.name} is an old player, sending to game")
         # Send to game
       end
-      @logger.info("The user #{user.name} has identifed")
+      @logger.info("The user #{user.name} has identified")
     end
 
     def welcome_message : String
@@ -65,7 +65,7 @@ module LegacyOfMan
 
     def verify_user(username : String) : Bool
       @socket << "\r\nPlease enter your password: "
-      password = read(@socket, 1024)
+      password = read_s(@socket)
       hashed = Crypto::Bcrypt.new(password, @salt, cost = 11)
       rows = true
       DB.open "mysql://#{@config.db_user}@#{@config.db_ip}/#{@config.db_name}" do |db|
@@ -78,15 +78,15 @@ module LegacyOfMan
       @logger.info("A new user has been detected, registering now")
       @socket << "\r\nAs we cannot find your username we presume you are a new user\r\n"
       @socket << "Please enter the password that you would like to use: "
-      user_password = read(@socket, 1024)
+      user_password = read_s(@socket)
       @socket << "\r\nplease verify your password again: "
-      user_password_two = read(@socket, 1024)
+      user_password_two = read_s(@socket)
       unless user_password_two == user_password && !user_password.to_s.empty?
         @socket << "Passwords doesn't match !"
         raise "Error creating new user: Password doesn't match"
       end
       @socket << "\r\nPlease enter your email address (only will be used for password recovery): "
-      email = read(@socket, 1024)
+      email = read_s(@socket)
       if email.to_s.empty?
         @socket << "Cannot accept empty email !"
         raise "Error creating new user: empty email"
@@ -96,7 +96,7 @@ module LegacyOfMan
         db.exec "INSERT INTO users (username, password, email, data) VALUES ('#{username}', '#{Crypto::Bcrypt.new(user_password, @salt, cost = 11)}', '#{email}', '#{genereate_new_char_data}');"
       end
       @logger.info("New user #{username} has been created")
-      @socket << "User created, plesae relogin with your new user and password"
+      @socket << "User created, please relogin with your new user and password"
     end
 
     def genereate_new_char_data : String
@@ -108,7 +108,7 @@ module LegacyOfMan
         "skills": {"basic_attack": 1},
         "equipment": {"worn clothes": "body"},
         "stats": {
-          "intelegence": 5,
+          "intelligence": 5,
           "strength": 5,
           "agility": 5
         }

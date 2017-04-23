@@ -21,7 +21,7 @@ module LegacyOfMan
       begin
         TCPServer.new(@config.port)
       rescue e : Exception
-        @logger.error("Error starting listiner: #{e}")
+        @logger.error("Error starting listener: #{e}")
         exit 1
       end
     end
@@ -64,7 +64,7 @@ module LegacyOfMan
             end
           end
         rescue e : Exception
-          @logger.error("Error handeling client: #{e}")
+          @logger.error("Error handling client: #{e}")
         end
       end
     end
