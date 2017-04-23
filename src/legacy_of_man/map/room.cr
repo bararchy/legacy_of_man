@@ -36,7 +36,7 @@ module LegacyOfMan
         matrix[y][x] = "[X]"
         puts "Exit is at #{@exit_p} matrix is \r\n#{matrix}"
         matrix[y2][x2] = "[E]"
-        matrix.reverse
+        matrix.reverse!
         map = ""
         matrix.each do |line|
           map += "#{line.join}\r\n"
